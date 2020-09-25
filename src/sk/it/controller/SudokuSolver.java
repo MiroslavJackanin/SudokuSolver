@@ -52,16 +52,23 @@ public class SudokuSolver {
     }
 
     private void reduceAvailableValuesInCol() {
-        for (int i=0; i<board.getTiles().length; i++)
-            for (int j = 0; j < board.getTiles().length; j++)
-                if (board.getTiles()[j][i].getAvailable() != null)
-                    board.getTiles()[j][i].remove(board.getTiles()[j][i].getValue());
+        for (int i=0; i<board.getTiles().length; i++){
+            for (int j=0; j<board.getTiles().length; i++){
+                if (board.getTiles()[i][j].getAvailable() == null){
+                    for (int k=0; k<board.getTiles().length; k++){
+                        if (board.getTiles()[k][j].getAvailable() != null){
+                            board.getTiles()[k][j].remove(board.getTiles()[i][j].getValue());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void reduceAvailableValuesInRow(){
-        for (int i=0; i<board.getTiles().length; i++)
+        /*for (int i=0; i<board.getTiles().length; i++)
             for (int j = 0; j < board.getTiles().length; j++)
                 if (board.getTiles()[i][j].getAvailable() != null)
-                    board.getTiles()[i][j].remove(board.getTiles()[i][j].getValue());
+                    board.getTiles()[i][j].remove(board.getTiles()[i][j].getValue());*/
     }
 }
