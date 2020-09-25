@@ -53,7 +53,7 @@ public class SudokuSolver {
 
     private void reduceAvailableValuesInCol() {
         for (int i=0; i<board.getTiles().length; i++){
-            for (int j=0; j<board.getTiles().length; i++){
+            for (int j=0; j<board.getTiles().length; j++){
                 if (board.getTiles()[i][j].getAvailable() == null){
                     for (int k=0; k<board.getTiles().length; k++){
                         if (board.getTiles()[k][j].getAvailable() != null){
