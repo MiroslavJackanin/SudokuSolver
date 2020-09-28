@@ -15,6 +15,10 @@ public class SudokuSolver {
         board = new Board(arr);
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public boolean readData(){
         arr = new InputData().processData();
         return true;
@@ -54,10 +58,10 @@ public class SudokuSolver {
     private void reduceAvailableValuesInCol() {
         for (int i=0; i<board.getTiles().length; i++){
             for (int j=0; j<board.getTiles().length; j++){
-                if (board.getTiles()[i][j].getAvailable() == null){
+                if (board.getTiles()[i][j].getAvailable() != null){
                     for (int k=0; k<board.getTiles().length; k++){
-                        if (board.getTiles()[k][j].getAvailable() != null){
-                            board.getTiles()[k][j].remove(board.getTiles()[i][j].getValue());
+                        if (board.getTiles()[k][j].getValue() > 0){
+                            board.getTiles()[i][j].remove(board.getTiles()[k][j].getValue());
                         }
                     }
                 }
@@ -65,10 +69,40 @@ public class SudokuSolver {
         }
     }
 
-    public void reduceAvailableValuesInRow(){
-        /*for (int i=0; i<board.getTiles().length; i++)
-            for (int j = 0; j < board.getTiles().length; j++)
-                if (board.getTiles()[i][j].getAvailable() != null)
-                    board.getTiles()[i][j].remove(board.getTiles()[i][j].getValue());*/
+    public void reduceAvailableValuesInRow() {
+        for (int i = 0; i < board.getTiles().length; i++) {
+            for (int j = 0; j < board.getTiles().length; j++) {
+                if (board.getTiles()[i][j].getAvailable() != null) {
+                    for (int k = 0; k < board.getTiles().length; k++) {
+                        if (board.getTiles()[i][k].getValue() > 0) {
+                            board.getTiles()[i][j].remove(board.getTiles()[i][k].getValue());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void assignValues(){
+        for (int i=0; i<board.getTiles().length; i++){
+            for (int j=0; j<board.getTiles().length; j++){
+                if (board.getTiles()[i][j].getAvailable()!=null && board.getTiles()[i][j].getAvailable().size()==1){
+                    board.getTiles()[i][j].setValue(board.getTiles()[i][j].getAvailable().iterator().next());
+                    board.getTiles()[i][j].remove(board.getTiles()[i][j].getValue());
+                }
+            }
+        }
+    }
+
+    public boolean checkCompletion(){
+        int unassignedValues = 0;
+        for (int i=0; i<board.getTiles().length; i++){
+            for (int j=0; j<board.getTiles().length; j++){
+                if (board.getTiles()[i][j].getValue() == 0){
+                    unassignedValues++;
+                }
+            }
+        }
+        return unassignedValues == 0;
     }
 }
